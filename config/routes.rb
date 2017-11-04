@@ -6,6 +6,8 @@ Metamaps::Application.routes.draw do
   root to: 'main#home', via: :get
   get 'request', to: 'main#requestinvite', as: :request
 
+  resources :attachments, only: [:create, :destroy], shallow: true
+
   namespace :explore do
     get 'active'
     get 'featured'
@@ -120,6 +122,7 @@ Metamaps::Application.routes.draw do
 
   namespace :api, path: '/api', default: { format: :json } do
     namespace :v2, path: '/v2' do
+      resources :attachments, only: [:index, :show]
       resources :metacodes, only: [:index, :show]
       resources :mappings, only: [:index, :create, :show, :update, :destroy]
       resources :maps, only: [:index, :create, :show, :update, :destroy] do
