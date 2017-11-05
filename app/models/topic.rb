@@ -84,7 +84,7 @@ class Topic < ApplicationRecord
     super(methods: [:user_name, :user_image, :collaborator_ids])
       .merge(inmaps: inmaps(options[:user]), inmapsLinks: inmapsLinks(options[:user]),
              map_count: map_count(options[:user]), synapse_count: synapse_count(options[:user]),
-             attachments: attachments_json)
+            attachments: attachments_json)
   end
 
   def as_rdf
