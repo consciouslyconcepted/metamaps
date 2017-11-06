@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 ruby '2.3.0'
 
@@ -47,10 +48,10 @@ end
 group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'faker'
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rubocop'
-  gem 'tunemygc'
-  gem 'faker'
   gem 'timecop'
+  gem 'tunemygc'
 end

@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 class MessagePolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      visible = %w(public commons)
+      visible = %w[public commons]
       permission = 'maps.permission IN (?)'
       return scope.joins(:map).where(permission, visible) unless user
 

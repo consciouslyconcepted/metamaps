@@ -1,11 +1,12 @@
 # frozen_string_literal: true
+
 class UserPreference
   attr_accessor :metacodes, :metacode_focus, :follow_topic_on_created, :follow_topic_on_contributed,
                 :follow_map_on_created, :follow_map_on_contributed
 
   def initialize
     array = []
-    %w(Action Aim Idea Question Note Wildcard Subject).each do |m|
+    %w[Action Aim Idea Question Note Wildcard Subject].each do |m|
       begin
         metacode = Metacode.find_by(name: m)
         array.push(metacode.id.to_s) if metacode
