@@ -43,7 +43,7 @@ class MapActivityService
       num_adds = topics_added_events.where(eventable_id: ta.eventable_id).count
       num_removes = topics_removed_events.where(eventable_id: ta.eventable_id).count
       if num_adds > num_removes && scoped_topic_ids.include?(ta.eventable.id)
-        topics_added_to_include[ta.eventable_id] = ta 
+        topics_added_to_include[ta.eventable_id] = ta
       end
     end
     unless topics_added_to_include.keys.empty?
@@ -79,7 +79,7 @@ class MapActivityService
       num_adds = synapses_added_events.where(eventable_id: ta.eventable_id).count
       num_removes = synapses_removed_events.where(eventable_id: ta.eventable_id).count
       if num_adds > num_removes && scoped_synapse_ids.include?(ta.eventable.id)
-        synapses_added_to_include[ta.eventable_id] = ta 
+        synapses_added_to_include[ta.eventable_id] = ta
       end
     end
     unless synapses_added_to_include.keys.empty?

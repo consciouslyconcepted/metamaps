@@ -18,6 +18,6 @@ class Follow < ApplicationRecord
   private
 
   def add_subsetting
-    follow_reason = FollowReason.create!(follow: self)
+    FollowReason.create!(follow: self)
   end
 end

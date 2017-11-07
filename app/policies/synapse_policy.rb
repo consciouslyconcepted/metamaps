@@ -16,7 +16,7 @@ class SynapsePolicy < ApplicationPolicy
     end
 
     def unauthenticated_scope
-      return scope.where(permission: %w(public commons))
+      scope.where(permission: %w(public commons))
     end
   end
 

@@ -3,8 +3,8 @@
 class TopicPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-        return authenticated_scope if user
-        unauthenticated_scope
+      return authenticated_scope if user
+      unauthenticated_scope
     end
 
     private

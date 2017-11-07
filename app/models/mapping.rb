@@ -53,17 +53,17 @@ class Mapping < ApplicationRecord
   handle_asynchronously :after_created_async
 
   def after_updated
-    if (mappable_type == 'Topic') && (xloc_changed? || yloc_changed?)
-      meta = { 'x': xloc, 'y': yloc, 'mapping_id': id }
-      Events::TopicMovedOnMap.publish!(mappable, map, updated_by, meta)
-      ActionCable.server.broadcast 'map_' + map.id.to_s, type: 'topicMoved', id: mappable.id, mapping_id: id, x: xloc, y: yloc
-    end
+    return unless (mappable_type == 'Topic') && (xloc_changed? || yloc_changed?)
+    meta = { 'x': xloc, 'y': yloc, 'mapping_id': id }
+    Events::TopicMovedOnMap.publish!(mappable, map, updated_by, meta)
+    ActionCable.server.broadcast('map_' + map.id.to_s, type: 'topicMoved',
+                                 id: mappable.id, mapping_id: id,
+                                 x: xloc, y: yloc)
   end
 
   def after_updated_async
-    if (mappable_type == 'Topic') && (xloc_changed? || yloc_changed?)
-      FollowService.follow(map, updated_by, 'contributed')
-    end
+    return unless (mappable_type == 'Topic') && (xloc_changed? || yloc_changed?)
+    FollowService.follow(map, updated_by, 'contributed')
   end
   handle_asynchronously :after_updated_async
 

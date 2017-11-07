@@ -12,7 +12,7 @@ class Metacode < ApplicationRecord
                                default_url: 'https://s3.amazonaws.com/metamaps-assets/metacodes/generics/96px/gen_wildcard.png'
 
   # Validate the attached icon is image/jpg, image/png, etc
-  validates_attachment_content_type :aws_icon, content_type: /\Aimage\/.*\Z/
+  validates_attachment_content_type :aws_icon, content_type: %r(\Aimage/.*\Z)
 
   validate :aws_xor_manual_icon
   validate :manual_icon_https
@@ -56,10 +56,9 @@ class Metacode < ApplicationRecord
   end
 
   def manual_icon_https
-    if manual_icon.present?
-      unless manual_icon.starts_with? 'https'
-        errors.add(:base, 'Manual icon must begin with https')
-      end
+    return unless manual_icon.present?
+    unless manual_icon.starts_with? 'https'
+      errors.add(:base, 'Manual icon must begin with https')
     end
   end
 end

@@ -83,15 +83,15 @@ class Synapse < ApplicationRecord
   handle_asynchronously :after_created_async
 
   def after_updated
-    if ATTRS_TO_WATCH.any? { |k| changed_attributes.key?(k) }
-      new = attributes.select { |k| ATTRS_TO_WATCH.include?(k) }
-      old = changed_attributes.select { |k| ATTRS_TO_WATCH.include?(k) }
-      meta = new.merge(old) # we are prioritizing the old values, keeping them
-      meta['changed'] = changed_attributes.keys.select { |k| ATTRS_TO_WATCH.include?(k) }
-      Events::SynapseUpdated.publish!(self, updated_by, meta)
-      maps.each do |map|
-        ActionCable.server.broadcast 'map_' + map.id.to_s, type: 'synapseUpdated', id: id
-      end
+    return unless ATTRS_TO_WATCH.any? { |k| changed_attributes.key?(k) }
+
+    new = attributes.select { |k| ATTRS_TO_WATCH.include?(k) }
+    old = changed_attributes.select { |k| ATTRS_TO_WATCH.include?(k) }
+    meta = new.merge(old) # we are prioritizing the old values, keeping them
+    meta['changed'] = changed_attributes.keys.select { |k| ATTRS_TO_WATCH.include?(k) }
+    Events::SynapseUpdated.publish!(self, updated_by, meta)
+    maps.each do |map|
+      ActionCable.server.broadcast 'map_' + map.id.to_s, type: 'synapseUpdated', id: id
     end
   end
 
